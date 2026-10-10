@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading PDF Library</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #030e20;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  text-align: center;
+  padding: 25px 12px;
+  background: #06152a;
+  border-bottom: 2px solid #00ed79;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(27px, 5vw, 43px);
+  color: #35f477;
+}
+
+header p { color: #d5e5f7; }
+
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 22px 16px;
+}
+
+.welcome { text-align: center; }
+
+.welcome h2 { font-size: 27px; }
+
+.welcome span { color: #20ef79; }
+
+.welcome p {
+  color: #d8e3f2;
+  line-height: 1.8;
+}
+
+.book-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 25px 0;
+  padding: 22px;
+  background: linear-gradient(110deg, #071a30, #071027);
+  border: 1px solid #00bdf2;
+  border-radius: 19px;
+  box-shadow: 0 0 15px #00bdf21b;
+}
+
+.book-card.purple {
+  border-color: #d32aff;
+  box-shadow: 0 0 15px #d32aff1b;
+}
+
+.book-art {
+  flex: 0 0 200px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 700px;
+}
+
+.book-cover {
+  width: 145px;
+  height: 195px;
+  position: relative;
+  transform: rotateY(-16deg) rotateZ(-3deg);
+  border-radius: 3px 8px 8px 3px;
+  border-left: 9px solid #102c20;
+  background: linear-gradient(140deg, #10251f, #020807 65%);
+  box-shadow: 10px 10px 18px #0009, 0 0 22px #00ef6b55;
+  padding: 18px 9px;
+  text-align: center;
+  border-top: 2px solid #5dff9c;
+  border-right: 2px solid #5dff9c;
+  border-bottom: 2px solid #5dff9c;
+}
+
+.purple .book-cover {
+  background: linear-gradient(140deg, #261143, #070516 70%);
+  border-color: #e15aff;
+  box-shadow: 10px 10px 18px #0009, 0 0 22px #c83bff55;
+}
+
+.book-cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -9px;
+  height: 100%;
+  width: 8px;
+  background: linear-gradient(90deg, #07120d, #357a4d);
+}
+
+.purple .book-cover::after {
+  background: linear-gradient(90deg, #100821, #7d34a4);
+}
+
+.cover-title {
+  font-size: 23px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: white;
+}
+
+.cover-title span { color: #26fa76; }
+
+.purple .cover-title span { color: #e35bff; }
+
+.chart {
+  height: 66px;
+  margin-top: 18px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #416c60;
+  background: repeating-linear-gradient(
+    0deg, transparent 0 15px, #ffffff0b 16px
+  );
+}
+
+.chart i {
+  display: inline-block;
+  width: 8px;
+  margin: 0 2px;
+  border-radius: 2px;
+  background: #29ed82;
+  box-shadow: 0 0 5px #29ed82;
+}
+
+.chart i:nth-child(1) { height: 17px; }
+.chart i:nth-child(2) { height: 30px; }
+.chart i:nth-child(3) { height: 24px; background: #ff536b; }
+.chart i:nth-child(4) { height: 39px; }
+.chart i:nth-child(5) { height: 33px; background: #ff536b; }
+.chart i:nth-child(6) { height: 48px; }
+.chart i:nth-child(7) { height: 42px; }
+.chart i:nth-child(8) { height: 57px; background: #ff536b; }
+
+.book-info { flex: 1; min-width: 0; }
+
+.book-info h2 {
+  color: #2cf77b;
+  font-size: 26px;
+  margin: 0 0 12px;
+}
+
+.purple .book-info h2 { color: #df57ff; }
+
+.book-info p {
+  line-height: 1.8;
+  color: #d9e3f0;
+}
+
+.open-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 18px;
+  padding: 16px 12px;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #19ef70, #49ff87);
+  color: #031528;
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: 0 5px 18px #20ff7533;
+}
+
+.purple .open-btn {
+  background: linear-gradient(90deg, #d93bff, #f05bff);
+  box-shadow: 0 5px 18px #d93bff33;
+}
+
+.open-btn:hover { filter: brightness(1.1); }
+
+.instructions {
+  text-align: center;
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #087fb4;
+  border-radius: 17px;
+  line-height: 1.9;
+  color: #dce7f6;
+}
+
+.instructions h2 { color: #27f77c; }
+
+footer {
+  text-align: center;
+  padding: 22px 10px;
+  color: #b5c4d7;
+  border-top: 2px solid #00ed79;
+}
+
+@media (max-width: 620px) {
+  .book-card {
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 14px;
+  }
+
+  .book-art {
+    flex-basis: auto;
+    height: 205px;
+  }
+
+  .book-info { width: 100%; }
+
+  .book-info h2 { font-size: 23px; }
+
+  .open-btn { font-size: 17px; }
+
+  .welcome h2 { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>📚 Trading PDF Library</h1>
+  <p>Learn Trading for Free</p>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <h2>Welcome to Our <span>Trading PDF Library!</span></h2>
+    <p>
+      এখানে বিনামূল্যে Trading শেখার PDF পাবে।<br>
+      নিচের লিঙ্কে ক্লিক করে আমাদের YouTube চ্যানেলে ঘুরে আসো।
+      ফিরে এসে PDF খুলতে পারবে।
+    </p>
+  </section>
+
+  <section class="book-card">
+    <div class="book-art">
+      <div class="book-cover">
+        <div class="cover-title">
+          TRADING<br><span>BASICS</span>
+        </div>
+        <div class="chart">
+          <i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-info">
+      <h2>📊 Trading Basics PDF</h2>
+      <p>
+        Trading-এর প্রাথমিক ধারণা, বাজার কীভাবে কাজ করে
+        এবং নতুনদের জন্য সহজ গাইড।
+      </p>
+      <a class="open-btn" href="https://youtube.com/@real_lifecreations"
+         target="_blank" rel="noopener noreferrer"
+         onclick="sessionStorage.setItem('pdfToOpen','basic')">
+        🔗 Open the PDF Link →
+      </a>
+    </div>
+  </section>
+
+  <section class="book-card purple">
+    <div class="book-art">
+      <div class="book-cover">
+        <div class="cover-title">
+          TECHNICAL<br><span>ANALYSIS</span>
+        </div>
+        <div class="chart">
+          <i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-info">
+      <h2>📈 Technical Analysis PDF</h2>
+      <p>
+        চার্ট, ক্যান্ডেলস্টিক এবং Technical Analysis
+        সম্পর্কে শেখার গাইড।
+      </p>
+      <a class="open-btn" href="https://youtube.com/@real_lifecreations"
+         target="_blank" rel="noopener noreferrer"
+         onclick="sessionStorage.setItem('pdfToOpen','analysis')">
+        🔗 Open the PDF Link →
+      </a>
+    </div>
+  </section>
+
+  <section class="instructions">
+    <h2>💡 কীভাবে কাজ করবে?</h2>
+    <p>
+      ১. Open the PDF Link-এ ক্লিক করো।<br>
+      ২. YouTube চ্যানেল খুলবে; অবশ্যই Subscribe করো।<br>
+      ৩. আগের ওয়েবসাইটে ফিরে এসো।<br>
+      ৪. PDF খোলার জন্য নিচের বাটন ব্যবহার করো।
+    </p>
+    <div id="returnBox" style="display:none">
+      <p>ফিরে এসেছ! এবার তোমার PDF খুলে নাও।</p>
+      <button class="open-btn" onclick="openSelectedPDF()">
+        📄 Open PDF Now
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Trading PDF Library<br>
+  Free Educational Resources
+</footer>
+
+<script>
+const pdfLinks = {
+  basic: "https://drive.google.com/file/d/1ac8LXZaDTGcjTAJpOSsOr9P38GKVo7LB/view?usp=sharing",
+  analysis: "YOUR-SECOND-PDF-LINK"
+};
+
+function openSelectedPDF() {
+  const type = sessionStorage.getItem("pdfToOpen");
+  if (!type) return;
+
+  const url = pdfLinks[type];
+
+  if (!url || url.includes("YOUR-")) {
+    alert("আগে কোডে তোমার আসল PDF লিঙ্ক বসাও।");
+    return;
+  }
+
+  window.open(url, "_blank");
+}
+
+window.addEventListener("focus", function() {
+  if (sessionStorage.getItem("pdfToOpen")) {
+    document.getElementById("returnBox").style.display = "block";
+  }
+});
+</script>
+
+</body>
+</html>
